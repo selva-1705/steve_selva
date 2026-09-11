@@ -8,76 +8,68 @@
 
   const LIFESTYLE_ITEMS = [
     {
-      id: "adventure",
-      category: "Adventure",
-      title: "Above the Clouds",
-      status: "live",
-      img: "assets/images/gallery-mountain.jpg",
-      imgSm: "assets/images/sm/gallery-mountain-sm.jpg",
-      alt: "Steve Selva standing on a mountain ridge above the clouds at sunrise"
-    },
-    {
-      id: "nature",
-      category: "Nature",
-      title: "Golden Hour Tide",
-      status: "live",
-      img: "assets/images/gallery-sunset-sitting.jpg",
-      imgSm: "assets/images/sm/gallery-sunset-sitting-sm.jpg",
-      alt: "Steve Selva sitting by the ocean watching the sunset"
-    },
-    {
-      id: "travel",
-      category: "Travel",
-      title: "Ancient Roads",
-      status: "live",
-      img: "assets/images/lifestyle-travel-temple.jpg",
-      imgSm: "assets/images/sm/lifestyle-travel-temple-sm.jpg",
-      alt: "Steve Selva at a historic temple during golden hour"
-    },
-    {
-      id: "roadtrip",
-      category: "Road Trip",
-      title: "Coastal Streets",
-      status: "live",
-      img: "assets/images/feature-latest.jpg",
-      imgSm: "assets/images/sm/feature-latest-sm.jpg",
-      alt: "Steve Selva walking a European cobblestone street at dusk"
-    },
-    {
-      id: "luxury",
-      category: "Luxury",
-      title: "After Dark",
-      status: "live",
-      img: "assets/images/lifestyle-luxury-dinner.jpg",
-      imgSm: "assets/images/sm/lifestyle-luxury-dinner-sm.jpg",
-      alt: "Steve Selva in a suit at a candlelit dinner table"
-    },
-    {
-      id: "car",
-      category: "Car",
-      title: "BMW",
-      status: "soon",
-      img: "assets/images/gallery-profile-side.jpg",
-      imgSm: "assets/images/sm/gallery-profile-side-sm.jpg",
-      alt: "Steve Selva portrait, city background"
-    },
-    {
-      id: "bike",
-      category: "Bike",
-      title: "Superbike",
-      status: "soon",
+      id: "midnight-miles",
+      title: "Midnight Miles",
+      line: "Some roads are better after dark.",
       img: "assets/images/gallery-trackjacket.jpg",
       imgSm: "assets/images/sm/gallery-trackjacket-sm.jpg",
-      alt: "Steve Selva in a track jacket"
+      alt: "Steve Selva against an urban wall at night"
     },
     {
-      id: "aviation",
-      category: "Aviation",
-      title: "Private Helicopter",
-      status: "soon",
+      id: "two-wheels",
+      title: "Two Wheels",
+      line: "Another escape is waiting.",
+      img: "assets/images/gallery-profile-side.jpg",
+      imgSm: "assets/images/sm/gallery-profile-side-sm.jpg",
+      alt: "Steve Selva in profile, city light behind him"
+    },
+    {
+      id: "somewhere-new",
+      title: "Somewhere New",
+      line: "Not every destination needs a name.",
+      img: "assets/images/lifestyle-travel-temple.jpg",
+      imgSm: "assets/images/sm/lifestyle-travel-temple-sm.jpg",
+      alt: "Steve Selva at a historic stone monument during golden hour"
+    },
+    {
+      id: "no-fixed-destination",
+      title: "No Fixed Destination",
+      line: "The road decides, not the map.",
+      img: "assets/images/feature-latest.jpg",
+      imgSm: "assets/images/sm/feature-latest-sm.jpg",
+      alt: "Steve Selva walking a quiet street at dusk"
+    },
+    {
+      id: "off-the-grid",
+      title: "Off the Grid",
+      line: "Less noise. More life.",
+      img: "assets/images/gallery-mountain.jpg",
+      imgSm: "assets/images/sm/gallery-mountain-sm.jpg",
+      alt: "Steve Selva standing on a ridge above the clouds"
+    },
+    {
+      id: "after-hours",
+      title: "After Hours",
+      line: "Different mood. Same journey.",
+      img: "assets/images/lifestyle-luxury-dinner.jpg",
+      imgSm: "assets/images/sm/lifestyle-luxury-dinner-sm.jpg",
+      alt: "Steve Selva at a candlelit table at night"
+    },
+    {
+      id: "above-the-city",
+      title: "Above the City",
+      line: "Maybe the next view is different.",
       img: "assets/images/lifestyle-aviation-office.jpg",
       imgSm: "assets/images/sm/lifestyle-aviation-office-sm.jpg",
-      alt: "Steve Selva portrait in a modern glass building"
+      alt: "Steve Selva in a glass-walled high-rise"
+    },
+    {
+      id: "whats-next",
+      title: "What's Next?",
+      line: "That's the part I'm not telling yet.",
+      img: "assets/images/gallery-sunset-sitting.jpg",
+      imgSm: "assets/images/sm/gallery-sunset-sitting-sm.jpg",
+      alt: "Steve Selva watching the horizon at sunset"
     }
   ];
 
@@ -158,15 +150,12 @@
   const grid = document.getElementById("lifestyle-grid");
 
   LIFESTYLE_ITEMS.forEach((item, index) => {
-    const card = document.createElement(item.status === "live" ? "button" : "div");
-    card.className = "life-card" + (item.status === "soon" ? " is-soon" : "");
+    const card = document.createElement("button");
+    card.className = "life-card";
+    card.type = "button";
     card.setAttribute("role", "listitem");
-
-    if (item.status === "live") {
-      card.type = "button";
-      card.setAttribute("aria-label", `View ${item.title} — ${item.category}`);
-      card.addEventListener("click", () => openLightbox(index));
-    }
+    card.setAttribute("aria-label", `Open ${item.title}`);
+    card.addEventListener("click", () => openLightbox(index));
 
     card.innerHTML = `
       <picture>
@@ -174,10 +163,9 @@
         <img src="${item.img}" alt="${item.alt}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
       </picture>
       <div class="life-card-overlay">
-        <p class="life-card-cat">${item.category}</p>
         <p class="life-card-title">${item.title}</p>
+        <p class="life-card-line">${item.line}</p>
       </div>
-      ${item.status === "soon" ? '<span class="soon-badge">Coming Soon</span>' : ""}
     `;
 
     grid.appendChild(card);
@@ -215,11 +203,10 @@
   /* ============================================================
      Lightbox
      ============================================================ */
-  const liveItems = LIFESTYLE_ITEMS.filter((i) => i.status === "live");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
-  const lightboxCategory = document.getElementById("lightbox-category");
   const lightboxTitle = document.getElementById("lightbox-title");
+  const lightboxLine = document.getElementById("lightbox-line");
   const lightboxClose = document.getElementById("lightbox-close");
   const lightboxPrev = document.getElementById("lightbox-prev");
   const lightboxNext = document.getElementById("lightbox-next");
@@ -227,23 +214,16 @@
   let currentIndex = 0;
   let lastFocusedEl = null;
 
-  function itemIndexToLiveIndex(gridIndex) {
-    const item = LIFESTYLE_ITEMS[gridIndex];
-    return liveItems.findIndex((i) => i.id === item.id);
-  }
-
   function renderLightbox() {
-    const item = liveItems[currentIndex];
+    const item = LIFESTYLE_ITEMS[currentIndex];
     lightboxImg.src = item.img;
     lightboxImg.alt = item.alt;
-    lightboxCategory.textContent = item.category;
     lightboxTitle.textContent = item.title;
+    lightboxLine.textContent = item.line;
   }
 
   function openLightbox(gridIndex) {
-    const liveIndex = itemIndexToLiveIndex(gridIndex);
-    if (liveIndex === -1) return;
-    currentIndex = liveIndex;
+    currentIndex = gridIndex;
     lastFocusedEl = document.activeElement;
     renderLightbox();
     lightbox.hidden = false;
@@ -258,12 +238,12 @@
   }
 
   function showNext() {
-    currentIndex = (currentIndex + 1) % liveItems.length;
+    currentIndex = (currentIndex + 1) % LIFESTYLE_ITEMS.length;
     renderLightbox();
   }
 
   function showPrev() {
-    currentIndex = (currentIndex - 1 + liveItems.length) % liveItems.length;
+    currentIndex = (currentIndex - 1 + LIFESTYLE_ITEMS.length) % LIFESTYLE_ITEMS.length;
     renderLightbox();
   }
 

@@ -427,6 +427,12 @@ button:focus-visible {
   border: 1px solid var(--line);
   cursor: pointer;
   background: var(--charcoal-2);
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font-family: inherit;
+  display: block;
+  width: 100%;
 }
 .life-card:nth-child(6n+1) { grid-column: span 2; grid-row: span 2; }
 .life-card:nth-child(6n+2) { grid-column: span 2; grid-row: span 1; }
@@ -446,10 +452,6 @@ button:focus-visible {
 .life-card:hover img,
 .life-card:focus-visible img { transform: scale(1.06); }
 
-.life-card.is-soon img {
-  filter: grayscale(0.55) brightness(0.5);
-}
-
 .life-card-overlay {
   position: absolute;
   inset: 0;
@@ -457,40 +459,34 @@ button:focus-visible {
   flex-direction: column;
   justify-content: flex-end;
   padding: 20px;
-  background: linear-gradient(to top, rgba(10,10,11,0.9) 0%, rgba(10,10,11,0.05) 55%);
-}
-
-.life-card-cat {
-  font-size: 0.66rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 6px;
-  font-weight: 600;
+  background: linear-gradient(to top, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.08) 60%);
 }
 
 .life-card-title {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--off-white);
-}
-
-.soon-badge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: var(--black);
-  background: var(--accent);
-  padding: 6px 10px;
-  border-radius: 3px;
+  color: var(--off-white);
+  letter-spacing: -0.005em;
 }
 
-.life-card.is-soon { cursor: default; }
-.life-card.is-soon .life-card-title { color: var(--muted); }
+.life-card-line {
+  font-size: 0.85rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--muted);
+  margin-top: 6px;
+  max-width: 34ch;
+  opacity: 0.85;
+  transform: translateY(2px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.life-card:hover .life-card-line,
+.life-card:focus-visible .life-card-line {
+  opacity: 1;
+  transform: translateY(0);
+  color: var(--accent);
+}
 
 /* ==========================================================================
    Socials
@@ -619,15 +615,14 @@ button:focus-visible {
 }
 
 .lightbox-caption { text-align: center; }
-.lightbox-category {
-  font-size: 0.68rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 6px;
-  font-weight: 600;
+.lightbox-title { font-size: 1.3rem; font-weight: 700; }
+.lightbox-line {
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--muted);
+  margin-top: 6px;
 }
-.lightbox-title { font-size: 1.15rem; font-weight: 600; }
 
 .lightbox-close,
 .lightbox-nav {
