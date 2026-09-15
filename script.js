@@ -2,76 +2,10 @@
   "use strict";
 
   /* ============================================================
-     CONFIG — flip `status` to "live" and add real values to
-     activate a category or social platform later.
+     CONFIG — Instagram is the only real link. Every other entry
+     is a placeholder: swap `url: "#"` for the real address and
+     flip `placeholder` to false to activate it.
      ============================================================ */
-
-  const LIFESTYLE_ITEMS = [
-    {
-      id: "midnight-miles",
-      title: "Midnight Miles",
-      line: "Some roads are better after dark.",
-      img: "assets/images/gallery-trackjacket.jpg",
-      imgSm: "assets/images/sm/gallery-trackjacket-sm.jpg",
-      alt: "Steve Selva against an urban wall at night"
-    },
-    {
-      id: "two-wheels",
-      title: "Two Wheels",
-      line: "Another escape is waiting.",
-      img: "assets/images/gallery-profile-side.jpg",
-      imgSm: "assets/images/sm/gallery-profile-side-sm.jpg",
-      alt: "Steve Selva in profile, city light behind him"
-    },
-    {
-      id: "somewhere-new",
-      title: "Somewhere New",
-      line: "Not every destination needs a name.",
-      img: "assets/images/lifestyle-travel-temple.jpg",
-      imgSm: "assets/images/sm/lifestyle-travel-temple-sm.jpg",
-      alt: "Steve Selva at a historic stone monument during golden hour"
-    },
-    {
-      id: "no-fixed-destination",
-      title: "No Fixed Destination",
-      line: "The road decides, not the map.",
-      img: "assets/images/feature-latest.jpg",
-      imgSm: "assets/images/sm/feature-latest-sm.jpg",
-      alt: "Steve Selva walking a quiet street at dusk"
-    },
-    {
-      id: "off-the-grid",
-      title: "Off the Grid",
-      line: "Less noise. More life.",
-      img: "assets/images/gallery-mountain.jpg",
-      imgSm: "assets/images/sm/gallery-mountain-sm.jpg",
-      alt: "Steve Selva standing on a ridge above the clouds"
-    },
-    {
-      id: "after-hours",
-      title: "After Hours",
-      line: "Different mood. Same journey.",
-      img: "assets/images/lifestyle-luxury-dinner.jpg",
-      imgSm: "assets/images/sm/lifestyle-luxury-dinner-sm.jpg",
-      alt: "Steve Selva at a candlelit table at night"
-    },
-    {
-      id: "above-the-city",
-      title: "Above the City",
-      line: "Maybe the next view is different.",
-      img: "assets/images/lifestyle-aviation-office.jpg",
-      imgSm: "assets/images/sm/lifestyle-aviation-office-sm.jpg",
-      alt: "Steve Selva in a glass-walled high-rise"
-    },
-    {
-      id: "whats-next",
-      title: "What's Next?",
-      line: "That's the part I'm not telling yet.",
-      img: "assets/images/gallery-sunset-sitting.jpg",
-      imgSm: "assets/images/sm/gallery-sunset-sitting-sm.jpg",
-      alt: "Steve Selva watching the horizon at sunset"
-    }
-  ];
 
   const ICONS = {
     instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>',
@@ -85,14 +19,14 @@
   };
 
   const SOCIAL_LINKS = [
-    { key: "instagram", name: "Instagram", handle: "@steve___selva", url: "https://www.instagram.com/steve___selva/", featured: true },
-    { key: "youtube", name: "YouTube", handle: null, url: null },
-    { key: "facebook", name: "Facebook", handle: null, url: null },
-    { key: "tiktok", name: "TikTok", handle: null, url: null },
-    { key: "linkedin", name: "LinkedIn", handle: null, url: null },
-    { key: "x", name: "X", handle: null, url: null },
-    { key: "github", name: "GitHub", handle: null, url: null },
-    { key: "website", name: "Website", handle: null, url: null }
+    { key: "instagram", name: "Instagram", handle: "@steve___selva", url: "https://www.instagram.com/steve___selva/", featured: true, placeholder: false },
+    { key: "youtube", name: "YouTube", handle: null, url: "#", placeholder: true },
+    { key: "facebook", name: "Facebook", handle: null, url: "#", placeholder: true },
+    { key: "tiktok", name: "TikTok", handle: null, url: "#", placeholder: true },
+    { key: "linkedin", name: "LinkedIn", handle: null, url: "#", placeholder: true },
+    { key: "x", name: "X", handle: null, url: "#", placeholder: true },
+    { key: "github", name: "GitHub", handle: null, url: "#", placeholder: true },
+    { key: "website", name: "Website", handle: null, url: "#", placeholder: true }
   ];
 
   /* ============================================================
@@ -123,156 +57,82 @@
   });
 
   /* ============================================================
-     Hero reveal + subtle parallax
+     Hero reveal + interactions (Home page only)
      ============================================================ */
   const heroSection = document.querySelector(".hero");
-  const heroImg = document.querySelector(".hero-img");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
 
-  window.requestAnimationFrame(() => heroSection.classList.add("loaded"));
+  if (heroSection) {
+    window.requestAnimationFrame(() => heroSection.classList.add("loaded"));
 
-  if (!prefersReducedMotion && heroImg) {
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const offset = Math.min(window.scrollY * 0.08, 40);
-        heroImg.style.transform = `translateY(${offset}px) scale(1.0)`;
-        ticking = false;
+    if (hasFinePointer && !prefersReducedMotion) {
+      let ticking = false;
+      let lastEvent = null;
+      heroSection.addEventListener("mousemove", (e) => {
+        lastEvent = e;
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const rect = heroSection.getBoundingClientRect();
+          const x = ((lastEvent.clientX - rect.left) / rect.width) * 100;
+          const y = ((lastEvent.clientY - rect.top) / rect.height) * 100;
+          heroSection.style.setProperty("--mx", `${x}%`);
+          heroSection.style.setProperty("--my", `${y}%`);
+          ticking = false;
+        });
       });
-    }, { passive: true });
+    }
   }
 
   /* ============================================================
-     Render Lifestyle grid
+     Magnetic hover — nudges buttons/nav links toward the cursor
      ============================================================ */
-  const grid = document.getElementById("lifestyle-grid");
-
-  LIFESTYLE_ITEMS.forEach((item, index) => {
-    const card = document.createElement("button");
-    card.className = "life-card";
-    card.type = "button";
-    card.setAttribute("role", "listitem");
-    card.setAttribute("aria-label", `Open ${item.title}`);
-    card.addEventListener("click", () => openLightbox(index));
-
-    card.innerHTML = `
-      <picture>
-        <source media="(max-width: 640px)" srcset="${item.imgSm}">
-        <img src="${item.img}" alt="${item.alt}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
-      </picture>
-      <div class="life-card-overlay">
-        <p class="life-card-title">${item.title}</p>
-        <p class="life-card-line">${item.line}</p>
-      </div>
-    `;
-
-    grid.appendChild(card);
-  });
+  if (hasFinePointer && !prefersReducedMotion) {
+    document.querySelectorAll(".btn, .main-nav a").forEach((el) => {
+      el.addEventListener("mousemove", (e) => {
+        const rect = el.getBoundingClientRect();
+        const relX = e.clientX - rect.left - rect.width / 2;
+        const relY = e.clientY - rect.top - rect.height / 2;
+        el.style.transform = `translate(${relX * 0.25}px, ${relY * 0.25}px)`;
+      });
+      el.addEventListener("mouseleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
 
   /* ============================================================
-     Render Socials grid
+     Render Socials grid (Socials page only)
      ============================================================ */
   const socialsGrid = document.getElementById("socials-grid");
 
-  SOCIAL_LINKS.forEach((social) => {
-    const hasUrl = Boolean(social.url);
-    const el = document.createElement(hasUrl ? "a" : "div");
-    el.className = "social-card" + (social.featured ? " featured" : "") + (!hasUrl ? " is-soon" : "");
-
-    if (hasUrl) {
+  if (socialsGrid) {
+    SOCIAL_LINKS.forEach((social) => {
+      const el = document.createElement("a");
+      el.className = "social-card" + (social.featured ? " featured" : "") + (social.placeholder ? " is-placeholder" : "");
       el.href = social.url;
-      el.target = "_blank";
-      el.rel = "noopener noreferrer";
-      el.setAttribute("aria-label", `${social.name} — ${social.handle || "visit"}`);
-    }
 
-    el.innerHTML = `
-      <span class="social-icon" aria-hidden="true">${ICONS[social.key] || ""}</span>
-      <div>
-        <p class="social-name">${social.name}</p>
-        ${social.handle ? `<p class="social-handle">${social.handle}</p>` : ""}
-      </div>
-      <p class="social-status">${hasUrl ? "Follow →" : "Coming Soon"}</p>
-    `;
-
-    socialsGrid.appendChild(el);
-  });
-
-  /* ============================================================
-     Lightbox
-     ============================================================ */
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const lightboxTitle = document.getElementById("lightbox-title");
-  const lightboxLine = document.getElementById("lightbox-line");
-  const lightboxClose = document.getElementById("lightbox-close");
-  const lightboxPrev = document.getElementById("lightbox-prev");
-  const lightboxNext = document.getElementById("lightbox-next");
-
-  let currentIndex = 0;
-  let lastFocusedEl = null;
-
-  function renderLightbox() {
-    const item = LIFESTYLE_ITEMS[currentIndex];
-    lightboxImg.src = item.img;
-    lightboxImg.alt = item.alt;
-    lightboxTitle.textContent = item.title;
-    lightboxLine.textContent = item.line;
-  }
-
-  function openLightbox(gridIndex) {
-    currentIndex = gridIndex;
-    lastFocusedEl = document.activeElement;
-    renderLightbox();
-    lightbox.hidden = false;
-    document.body.style.overflow = "hidden";
-    lightboxClose.focus();
-  }
-
-  function closeLightbox() {
-    lightbox.hidden = true;
-    document.body.style.overflow = "";
-    if (lastFocusedEl) lastFocusedEl.focus();
-  }
-
-  function showNext() {
-    currentIndex = (currentIndex + 1) % LIFESTYLE_ITEMS.length;
-    renderLightbox();
-  }
-
-  function showPrev() {
-    currentIndex = (currentIndex - 1 + LIFESTYLE_ITEMS.length) % LIFESTYLE_ITEMS.length;
-    renderLightbox();
-  }
-
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightboxNext.addEventListener("click", showNext);
-  lightboxPrev.addEventListener("click", showPrev);
-
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (lightbox.hidden) return;
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowRight") showNext();
-    if (e.key === "ArrowLeft") showPrev();
-    if (e.key === "Tab") {
-      const focusables = [lightboxClose, lightboxPrev, lightboxNext];
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+      if (social.placeholder) {
+        el.setAttribute("aria-label", `${social.name} — link not added yet`);
+      } else {
+        el.target = "_blank";
+        el.rel = "noopener noreferrer";
+        el.setAttribute("aria-label", `${social.name} — ${social.handle || "visit"}`);
       }
-    }
-  });
+
+      el.innerHTML = `
+        <span class="social-icon" aria-hidden="true">${ICONS[social.key] || ""}</span>
+        <div>
+          <p class="social-name">${social.name}</p>
+          ${social.handle ? `<p class="social-handle">${social.handle}</p>` : ""}
+        </div>
+        <p class="social-status">${social.placeholder ? "Placeholder" : "Follow →"}</p>
+      `;
+
+      socialsGrid.appendChild(el);
+    });
+  }
 
   /* ============================================================
      Footer year

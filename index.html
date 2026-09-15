@@ -4,22 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Steve Selva — Create. Share. Repeat.</title>
-<meta name="description" content="Steve Selva. Some chapters are meant to be seen. Some are meant to be lived.">
+<meta name="description" content="Steve Selva. Create. Share. Repeat.">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Steve Selva — Create. Share. Repeat.">
-<meta property="og:description" content="Some chapters are meant to be seen. Some are meant to be lived.">
+<meta property="og:description" content="Steve Selva. Create. Share. Repeat.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/images/profile.jpeg">
 <meta property="og:url" content="https://selva-1705.github.io/steve_selva/">
 
 <!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Steve Selva — Create. Share. Repeat.">
-<meta name="twitter:description" content="Some chapters are meant to be seen. Some are meant to be lived.">
-<meta name="twitter:image" content="assets/images/profile.jpeg">
+<meta name="twitter:description" content="Steve Selva. Create. Share. Repeat.">
 
-<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0b'/%3E%3Ctext x='50' y='70' font-size='62' font-family='Helvetica,Arial,sans-serif' fill='%23c9a24b' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,13 +26,11 @@
 
 <header class="site-header" id="site-header">
   <div class="header-inner">
-    <a href="#home" class="logo">STEVE<span>SELVA</span></a>
+    <a href="index.html" class="logo">STEVE<span>SELVA</span></a>
 
     <nav class="main-nav" id="main-nav" aria-label="Primary">
-      <a href="#home">Home</a>
-      <a href="#lifestyle">Lifestyle</a>
-      <a href="#socials">Socials</a>
-      <a href="https://www.instagram.com/steve___selva/" class="nav-insta" target="_blank" rel="noopener noreferrer">Instagram →</a>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="socials.html">Socials</a>
     </nav>
 
     <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
@@ -43,10 +39,8 @@
   </div>
 
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <a href="#home">Home</a>
-    <a href="#lifestyle">Lifestyle</a>
-    <a href="#socials">Socials</a>
-    <a href="https://www.instagram.com/steve___selva/" target="_blank" rel="noopener noreferrer">Instagram →</a>
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="socials.html">Socials</a>
   </nav>
 </header>
 
@@ -54,56 +48,48 @@
 
   <!-- ============ HOME / HERO ============ -->
   <section class="hero" id="home">
-    <div class="hero-media" data-parallax>
-      <picture>
-        <source media="(max-width: 720px)" srcset="assets/images/sm/profile-sm.jpg">
-        <img src="assets/images/profile.jpeg" alt="Steve Selva, portrait" class="hero-img" fetchpriority="high">
-      </picture>
-      <div class="hero-media-gradient"></div>
+
+    <!--
+      Background video (unlisted YouTube embed, muted + autoplay + loop).
+      Replace YOUR_VIDEO_ID_HERE with the real unlisted video ID.
+
+      Vimeo alternative — swap the iframe src for:
+      https://player.vimeo.com/video/YOUR_VIDEO_ID_HERE?autoplay=1&loop=1&muted=1&background=1
+    -->
+    <div class="hero-video-wrap" aria-hidden="true">
+      <iframe
+        src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID_HERE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3"
+        title="Background video"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        tabindex="-1"
+      ></iframe>
     </div>
 
+    <div class="hero-overlay"></div>
+
     <div class="hero-content">
-      <p class="eyebrow reveal">Vol. 01 — Ongoing</p>
-      <h1 class="hero-title reveal">Steve Selva</h1>
+      <p class="eyebrow reveal">@steve___selva</p>
+      <h1 class="hero-title reveal">
+        <span class="title-line title-light">Steve</span>
+        <span class="title-line title-bold">Selva</span>
+      </h1>
       <p class="hero-tagline reveal">Create. Share. Repeat.</p>
       <p class="hero-sub reveal">Some chapters are meant to be seen.<br>Some are meant to be lived.</p>
 
       <div class="hero-cta reveal">
-        <a href="#lifestyle" class="btn btn-primary">See What's Next <span aria-hidden="true">→</span></a>
+        <a href="socials.html" class="btn btn-primary">Find Me <span aria-hidden="true">→</span></a>
         <a href="https://www.instagram.com/steve___selva/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
           Instagram <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
 
-    <a href="#lifestyle" class="scroll-cue" aria-label="Scroll to the next chapter">
-      <span></span>
-    </a>
-  </section>
-
-  <!-- ============ LIFESTYLE ============ -->
-  <section class="lifestyle" id="lifestyle">
-    <div class="section-head">
-      <p class="eyebrow">The Journal</p>
-      <h2>Chapters</h2>
-      <p class="section-sub">A few moments worth keeping. The rest is still being written.</p>
-    </div>
-
-    <div class="lifestyle-grid" id="lifestyle-grid" role="list">
-      <!-- injected by script.js from LIFESTYLE_ITEMS -->
-    </div>
-  </section>
-
-  <!-- ============ SOCIALS ============ -->
-  <section class="socials" id="socials">
-    <div class="section-head">
-      <p class="eyebrow">Stay Close</p>
-      <h2>Where it continues</h2>
-      <p class="section-sub">Instagram is where it's really happening. Everything else is still being built.</p>
-    </div>
-
-    <div class="socials-grid" id="socials-grid">
-      <!-- injected by script.js from SOCIAL_LINKS -->
+    <div class="hero-marquee" aria-hidden="true">
+      <div class="hero-marquee-track">
+        <span>Create — Share — Repeat —&nbsp;</span>
+        <span>Create — Share — Repeat —&nbsp;</span>
+      </div>
     </div>
   </section>
 
@@ -112,21 +98,6 @@
 <footer class="site-footer">
   <p>&copy; <span id="year"></span> Steve Selva. Create. Share. Repeat.</p>
 </footer>
-
-<!-- ============ LIGHTBOX ============ -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
-  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
-  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#8249;</button>
-  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&#8250;</button>
-
-  <div class="lightbox-inner">
-    <img id="lightbox-img" src="" alt="">
-    <div class="lightbox-caption">
-      <p class="lightbox-title" id="lightbox-title"></p>
-      <p class="lightbox-line" id="lightbox-line"></p>
-    </div>
-  </div>
-</div>
 
 <script src="script.js"></script>
 </body>
